@@ -7,6 +7,7 @@ class Dye {
         }
         char colorCodeToConvert = args[0].charAt(1);
         String colorCodeConvertedTo = args[1];
-        ArgumentParser.parse(colorCodeToConvert, colorCodeConvertedTo);
+        String convertedColor = ArgumentParser.parse(colorCodeToConvert, colorCodeConvertedTo);
+        System.out.println("Converted Color :=> " + convertedColor);
     }
 }

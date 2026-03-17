@@ -1,0 +1,119 @@
+import java.util.Scanner;
+
+public class RGBConverter {
+
+    private static RGBObj rgbObj;
+    private static final String hexDigits = "0123456789ABCDEF";
+
+    public static void setrgbValues() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter r value: ");
+        int rValue = input.nextInt();
+        System.out.print("Enter g value: ");
+        int gValue = input.nextInt();
+        System.out.print("Enter b value: ");
+        int bValue = input.nextInt();
+        rgbObj = new RGBObj(rValue, gValue, bValue);
+        input.close();
+    }
+
+    public static String convertRGB(String colorCodeConvertedTo) {
+        setrgbValues();
+        String convertedColor = "";
+        if (colorCodeConvertedTo.equals("hex")) {
+            convertedColor = convertToHex(rgbObj);
+        } else {
+            convertedColor = convertToHsl(colorCodeConvertedTo);
+        }
+        return convertedColor;
+    }
+
+    public static String convertToHex(RGBObj rgbObj) {
+        int r = rgbObj.getRValue();
+        int g = rgbObj.getGValue();
+        int b = rgbObj.getBValue();
+        String hex = String.format("#02x%02x%02x", r, g, b);
+        return hex;
+    }
+
+    public static String convertToHsl(String colorCodeConvertedTo) {
+        /*
+         * Uses Mathematical formulas from
+         * https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
+         * Notes reflects Latex from that article
+         */
+
+        // RGB Values must be in [0, 1]
+        float r = rgbObj.getRValue() / 255f;
+        float g = rgbObj.getGValue() / 255f;
+        float b = rgbObj.getBValue() / 255f;
+
+        // With maximum compoonent (i.e. value)
+        float Cmax = Math.max(r, Math.max(g, b));
+        // And minimum component
+        float Cmin = Math.min(r, Math.min(g, b));
+        // range (i.e. chroma)
+        float delta = Cmax - Cmin;
+        // and mid-range (i.e. lightness)
+        float L = (Cmax + Cmin) / 2;
+        // we get common hue:
+        float H = 0; // H := 0 if C = 0
+        if (delta != 0) {
+            if (Cmax == r) { // if V = R
+                H = 60 * (2 + (b - r) / delta); // 60° * (((G - B) / C ) mod 6)
+            } else if (Cmax == g) { // if V = G
+                H = 60 * (2 + (b - r) / delta); // 60° * (((B - R) / C) + 2)
+            } else { // if V = B
+                H = 60 * (4 + (r - g) / delta); // 60° * (((R -G) / C) + 4)
+            }
+            // NOTE: Not from wiki article, ensures hue remains within 360° range
+            if (H < 0) {
+                H += 360;
+            }
+        }
+
+        float S = 0; // S_V = 0 if V = 0, which indicates S_L = 0, as L = 0 or L = 1
+        if (delta != 0) {
+            S = delta / (1 - Math.abs(2 * L - 1)); // S_L = ((2(V - L))/(1 - |2L - 1|))
+        }
+        // NOTE: Not from wiki article, adjusts saturation and lightness to percentages
+        S *= 100;
+        L *= 100;
+
+        return String.format("HSL(%.1f°, %.1f%%, %.1f%%)", H, S, L);
+    }
+
+}
+
+class RGBObj {
+    private int rValue;
+    private int gValue;
+    private int bValue;
+
+    public RGBObj(int rVal, int gVal, int bVal) {
+        if (!isValidColorValue(rVal) || !isValidColorValue(gVal) || !isValidColorValue(bVal)) {
+            System.out.println("Error: RGB Values must be between 0 and 255");
+            System.exit(1);
+        }
+        this.rValue = rVal;
+        this.gValue = gVal;
+        this.bValue = bVal;
+    }
+
+    private boolean isValidColorValue(int value) {
+        return value >= 0 && value <= 255;
+    }
+
+    public int getRValue() {
+        return rValue;
+    }
+
+    public int getGValue() {
+        return gValue;
+    }
+
+    public int getBValue() {
+        return bValue;
+    }
+
+}

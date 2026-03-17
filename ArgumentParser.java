@@ -4,12 +4,13 @@ public class ArgumentParser {
 
     private static final Set<String> ACCEPTABLE_COLOR_CODES = Set.of("hex", "rgb", "hsl");
 
-    public static void parse(char colorCodeToConvert, String colorCodeConvertedTo) {
+    public static String parse(char colorCodeToConvert, String colorCodeConvertedTo) {
         if (!ACCEPTABLE_COLOR_CODES.contains(colorCodeConvertedTo)) {
             System.out.println("Print Help Function Goes Here.");
             // TODO: print help function
             System.exit(0);
         }
+        String convertedColor = "";
         switch (colorCodeToConvert) {
             case 'x':
                 if (colorCodeConvertedTo.equals("hex")) {
@@ -26,8 +27,7 @@ public class ArgumentParser {
                     System.out.println("Print Help Function Goes Here.");
                     // TODO: print help function
                 }
-                System.out.println("-r hit");
-                // convertRGB(colorCodeConvertedTo);
+                convertedColor = RGBConverter.convertRGB(colorCodeConvertedTo);
                 break;
             case 'h':
                 if (colorCodeConvertedTo.equals("hsl")) {
@@ -43,6 +43,7 @@ public class ArgumentParser {
                 // TODO: print help function
                 System.exit(0);
         }
+        return convertedColor;
     }
 
 }
