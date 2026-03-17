@@ -18,8 +18,7 @@ public class ArgumentParser {
                     System.out.println("Print Help Function Goes Here.");
                     // TODO: print help function
                 }
-                System.out.println("-x hit");
-                // convertedColor = HEXConverter.convertHex(colorCodeConvertedTo);
+                convertedColor = HEXConverter.convertHex(colorCodeConvertedTo);
                 break;
             case 'r':
                 if (colorCodeConvertedTo.equals("rgb")) {

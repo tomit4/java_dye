@@ -81,7 +81,6 @@ public class RGBConverter {
 
         return String.format("HSL(%.1f°, %.1f%%, %.1f%%)", H, S, L);
     }
-
 }
 
 class RGBObj {

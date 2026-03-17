@@ -28,7 +28,7 @@ public class HSLConverter {
     }
 
     public static String convertToHex() {
-        // NOTE: HSL to HEX requires first converting HSL to RGB, then RGB to hex
+        // NOTE: HSL to HEX requires first converting HSL to RGB, then RGB to HEX
         String rgb = convertToRgb();
 
         int r = Integer.parseInt(rgb.split(",")[0].split("\\(")[1].trim());
