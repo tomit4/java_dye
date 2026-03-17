@@ -3,32 +3,31 @@ import java.util.Scanner;
 public class RGBConverter {
 
     private static RGBObj rgbObj;
-    private static final String hexDigits = "0123456789ABCDEF";
 
-    public static void setrgbValues() {
+    public static void setRgbValues() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter r value: ");
+        System.out.print("Enter R value (0 to 255): ");
         int rValue = input.nextInt();
-        System.out.print("Enter g value: ");
+        System.out.print("Enter G value (0 to 255): ");
         int gValue = input.nextInt();
-        System.out.print("Enter b value: ");
+        System.out.print("Enter B value (0 to 255): ");
         int bValue = input.nextInt();
         rgbObj = new RGBObj(rValue, gValue, bValue);
         input.close();
     }
 
     public static String convertRGB(String colorCodeConvertedTo) {
-        setrgbValues();
+        setRgbValues();
         String convertedColor = "";
         if (colorCodeConvertedTo.equals("hex")) {
-            convertedColor = convertToHex(rgbObj);
+            convertedColor = convertToHex();
         } else {
-            convertedColor = convertToHsl(colorCodeConvertedTo);
+            convertedColor = convertToHsl();
         }
         return convertedColor;
     }
 
-    public static String convertToHex(RGBObj rgbObj) {
+    public static String convertToHex() {
         int r = rgbObj.getRValue();
         int g = rgbObj.getGValue();
         int b = rgbObj.getBValue();
@@ -36,7 +35,7 @@ public class RGBConverter {
         return hex;
     }
 
-    public static String convertToHsl(String colorCodeConvertedTo) {
+    public static String convertToHsl() {
         /*
          * Uses Mathematical formulas from
          * https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB

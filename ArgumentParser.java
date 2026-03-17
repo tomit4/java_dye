@@ -19,7 +19,7 @@ public class ArgumentParser {
                     // TODO: print help function
                 }
                 System.out.println("-x hit");
-                // convertHex(colorCodeConvertedTo);
+                // convertedColor = HEXConverter.convertHex(colorCodeConvertedTo);
                 break;
             case 'r':
                 if (colorCodeConvertedTo.equals("rgb")) {
@@ -35,8 +35,7 @@ public class ArgumentParser {
                     System.out.println("Print Help Function Goes Here.");
                     // TODO: print help function
                 }
-                System.out.println("-h hit");
-                // convertHSL(colorCodeConvertedTo);
+                convertedColor = HSLConverter.convertHSL(colorCodeConvertedTo);
                 break;
             default:
                 System.out.println("Print Help Function Goes Here.");
