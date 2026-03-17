@@ -86,3 +86,5 @@ Finally, we can find $R$, $G$, and $B$ by adding the same amount to each
 component, to match lightness:
 
 $$ m = L - \frac{C}{2} $$
+
+$$ (R, G, B) = (R_1 + m,G_1 + m,B_1 + m) $$

@@ -5,6 +5,7 @@ public class HSLConverter {
 
     public static void setHslValues() {
         Scanner input = new Scanner(System.in);
+
         System.out.print("Enter H value (0 to 360): ");
         int hValue = input.nextInt();
         System.out.print("Enter S value (0 to 100): ");
@@ -13,17 +14,21 @@ public class HSLConverter {
         int lValue = input.nextInt();
 
         hslObj = new HSLObj(hValue, sValue, lValue);
+
         input.close();
     }
 
     public static String convertHSL(String colorCodeConvertedTo) {
         setHslValues();
+
         String convertedColor = "";
+
         if (colorCodeConvertedTo.equals("hex")) {
             convertedColor = convertToHex();
         } else {
             convertedColor = convertToRgb();
         }
+
         return convertedColor;
     }
 
@@ -95,7 +100,6 @@ public class HSLConverter {
 
         return String.format("RGB(%d, %d, %d)", r, g, b);
     }
-
 }
 
 class HSLObj {
@@ -110,6 +114,7 @@ class HSLObj {
             System.out.println("Lightness must be 0 - 100");
             System.exit(1);
         }
+
         this.hValue = hVal;
         this.sValue = sVal;
         this.lValue = lVal;

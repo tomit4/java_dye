@@ -1,29 +1,34 @@
 import java.util.Scanner;
 
 public class RGBConverter {
-
     private static RGBObj rgbObj;
 
     public static void setRgbValues() {
         Scanner input = new Scanner(System.in);
+
         System.out.print("Enter R value (0 to 255): ");
         int rValue = input.nextInt();
         System.out.print("Enter G value (0 to 255): ");
         int gValue = input.nextInt();
         System.out.print("Enter B value (0 to 255): ");
         int bValue = input.nextInt();
+
         rgbObj = new RGBObj(rValue, gValue, bValue);
+
         input.close();
     }
 
     public static String convertRGB(String colorCodeConvertedTo) {
         setRgbValues();
+
         String convertedColor = "";
+
         if (colorCodeConvertedTo.equals("hex")) {
             convertedColor = convertToHex();
         } else {
             convertedColor = convertToHsl();
         }
+
         return convertedColor;
     }
 
@@ -31,8 +36,8 @@ public class RGBConverter {
         int r = rgbObj.getRValue();
         int g = rgbObj.getGValue();
         int b = rgbObj.getBValue();
-        String hex = String.format("#02x%02x%02x", r, g, b);
-        return hex;
+
+        return String.format("#02x%02x%02x", r, g, b);
     }
 
     public static String convertToHsl() {
@@ -113,5 +118,4 @@ class RGBObj {
     public int getBValue() {
         return bValue;
     }
-
 }

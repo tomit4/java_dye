@@ -7,6 +7,7 @@ public class HEXConverter {
 
     public static void setHexValues() {
         Scanner input = new Scanner(System.in);
+
         System.out.print("Enter A Hexadecimal Color Code: ");
         String hex = input.nextLine();
 
@@ -24,17 +25,21 @@ public class HEXConverter {
         String bVal = hex.substring(4, 6);
 
         hexObj = new HEXObj(rVal, gVal, bVal);
+
         input.close();
     }
 
     public static String convertHex(String colorCodeConvertedTo) {
         setHexValues();
+
         String convertedColor = "";
+
         if (colorCodeConvertedTo.equals("rgb")) {
             convertedColor = convertToRgb();
         } else {
             convertedColor = convertToHsl();
         }
+
         return convertedColor;
     }
 
@@ -110,6 +115,7 @@ class HEXObj {
             System.out.println("Must be hexadecimal digits (0-9, A-F).");
             System.exit(1);
         }
+
         this.rByte = rVal;
         this.gByte = gVal;
         this.bByte = bVal;
