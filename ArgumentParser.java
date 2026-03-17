@@ -1,0 +1,48 @@
+import java.util.Set;
+
+public class ArgumentParser {
+
+    private static final Set<String> ACCEPTABLE_COLOR_CODES = Set.of("hex", "rgb", "hsl");
+
+    public static void parse(char colorCodeToConvert, String colorCodeConvertedTo) {
+        if (!ACCEPTABLE_COLOR_CODES.contains(colorCodeConvertedTo)) {
+            System.out.println("Print Help Function Goes Here.");
+            // TODO: print help function
+            System.exit(0);
+        }
+        switch (colorCodeToConvert) {
+            case 'x':
+                if (colorCodeConvertedTo.equals("hex")) {
+                    System.out.println("-x and hex are the same color code, no conversion needed.");
+                    System.out.println("Print Help Function Goes Here.");
+                    // TODO: print help function
+                }
+                System.out.println("-x hit");
+                // convertHex(colorCodeConvertedTo);
+                break;
+            case 'r':
+                if (colorCodeConvertedTo.equals("rgb")) {
+                    System.out.println("-r and rgb are the same color code, no conversion needed.");
+                    System.out.println("Print Help Function Goes Here.");
+                    // TODO: print help function
+                }
+                System.out.println("-r hit");
+                // convertRGB(colorCodeConvertedTo);
+                break;
+            case 'h':
+                if (colorCodeConvertedTo.equals("hsl")) {
+                    System.out.println("-h and hsl are the same color code, no conversion needed.");
+                    System.out.println("Print Help Function Goes Here.");
+                    // TODO: print help function
+                }
+                System.out.println("-h hit");
+                // convertHSL(colorCodeConvertedTo);
+                break;
+            default:
+                System.out.println("Print Help Function Goes Here.");
+                // TODO: print help function
+                System.exit(0);
+        }
+    }
+
+}
