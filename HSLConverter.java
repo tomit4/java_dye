@@ -28,6 +28,7 @@ public class HSLConverter {
                 continue;
             }
 
+            input.nextLine();
             break;
         }
 

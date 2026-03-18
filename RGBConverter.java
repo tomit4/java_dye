@@ -27,6 +27,7 @@ public class RGBConverter {
                 continue;
             }
 
+            input.nextLine();
             break;
         }
 
