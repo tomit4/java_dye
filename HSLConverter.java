@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class HSLConverter {
     private static HSLObj hslObj;
@@ -7,29 +8,34 @@ public class HSLConverter {
         int hValue, sValue, lValue;
 
         while (true) {
-            System.out.print("Enter H value (0 to 360): ");
-            hValue = input.nextInt();
-            if (hValue < 0 || hValue > 360) {
-                System.out.println("Error: Hue must be 0 - 360");
-                continue;
-            }
+            try {
+                System.out.print("Enter H value (0 to 360): ");
+                hValue = input.nextInt();
+                if (hValue < 0 || hValue > 360) {
+                    System.out.println("Error: Hue must be 0 - 360");
+                    continue;
+                }
 
-            System.out.print("Enter S value (0 to 100): ");
-            sValue = input.nextInt();
-            if (sValue < 0 || sValue > 100) {
-                System.out.println("Saturation must be 0 - 100");
-                continue;
-            }
+                System.out.print("Enter S value (0 to 100): ");
+                sValue = input.nextInt();
+                if (sValue < 0 || sValue > 100) {
+                    System.out.println("Saturation must be 0 - 100");
+                    continue;
+                }
 
-            System.out.print("Enter L value (0 to 100): ");
-            lValue = input.nextInt();
-            if (lValue < 0 || lValue > 100) {
-                System.out.println("Lightness must be 0 - 100");
-                continue;
-            }
+                System.out.print("Enter L value (0 to 100): ");
+                lValue = input.nextInt();
+                if (lValue < 0 || lValue > 100) {
+                    System.out.println("Lightness must be 0 - 100");
+                    continue;
+                }
 
-            input.nextLine();
-            break;
+                input.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer value");
+                input.nextLine();
+            }
         }
 
         hslObj = new HSLObj(hValue, sValue, lValue);

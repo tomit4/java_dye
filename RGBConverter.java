@@ -1,34 +1,41 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class RGBConverter {
     private static RGBObj rgbObj;
 
     public static void setRgbValues(Scanner input) {
         int rValue, gValue, bValue;
+
         while (true) {
-            System.out.print("Enter R value (0 to 255): ");
-            rValue = input.nextInt();
-            if (!isValidColorValue(rValue)) {
-                System.out.println("Error: RGB Values must be between 0 and 255");
-                continue;
-            }
+            try {
+                System.out.print("Enter R value (0 to 255): ");
+                rValue = input.nextInt();
+                if (!isValidColorValue(rValue)) {
+                    System.out.println("Error: RGB Values must be between 0 and 255");
+                    continue;
+                }
 
-            System.out.print("Enter G value (0 to 255): ");
-            gValue = input.nextInt();
-            if (!isValidColorValue(gValue)) {
-                System.out.println("Error: RGB Values must be between 0 and 255");
-                continue;
-            }
+                System.out.print("Enter G value (0 to 255): ");
+                gValue = input.nextInt();
+                if (!isValidColorValue(gValue)) {
+                    System.out.println("Error: RGB Values must be between 0 and 255");
+                    continue;
+                }
 
-            System.out.print("Enter B value (0 to 255): ");
-            bValue = input.nextInt();
-            if (!isValidColorValue(bValue)) {
-                System.out.println("Error: RGB Values must be between 0 and 255");
-                continue;
-            }
+                System.out.print("Enter B value (0 to 255): ");
+                bValue = input.nextInt();
+                if (!isValidColorValue(bValue)) {
+                    System.out.println("Error: RGB Values must be between 0 and 255");
+                    continue;
+                }
 
-            input.nextLine();
-            break;
+                input.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer value.");
+                input.nextLine();
+            }
         }
 
         rgbObj = new RGBObj(rValue, gValue, bValue);
