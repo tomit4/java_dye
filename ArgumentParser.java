@@ -1,34 +1,17 @@
-import java.util.Set;
+import java.util.Scanner;
 
 public class ArgumentParser {
-    private static final Set<String> ACCEPTABLE_COLOR_CODES = Set.of("hex", "rgb", "hsl");
-
-    public static void parse(char colorCodeToConvert, String colorCodeConvertedTo) {
-        if (!ACCEPTABLE_COLOR_CODES.contains(colorCodeConvertedTo)) {
-            HelpPrinter.printHelp();
-        }
+    public static void parse(String colorCodeToConvert, String colorCodeConvertedTo, Scanner input) {
         String convertedColor = "";
         switch (colorCodeToConvert) {
-            case 'x':
-                if (colorCodeConvertedTo.equals("hex")) {
-                    System.out.println("-x and hex are the same color code, no conversion needed.");
-                    HelpPrinter.printHelp();
-                }
-                convertedColor = HEXConverter.convertHex(colorCodeConvertedTo);
+            case "hex":
+                convertedColor = HEXConverter.convertHex(colorCodeConvertedTo, input);
                 break;
-            case 'r':
-                if (colorCodeConvertedTo.equals("rgb")) {
-                    System.out.println("-r and rgb are the same color code, no conversion needed.");
-                    HelpPrinter.printHelp();
-                }
-                convertedColor = RGBConverter.convertRGB(colorCodeConvertedTo);
+            case "rgb":
+                convertedColor = RGBConverter.convertRGB(colorCodeConvertedTo, input);
                 break;
-            case 'h':
-                if (colorCodeConvertedTo.equals("hsl")) {
-                    System.out.println("-h and hsl are the same color code, no conversion needed.");
-                    HelpPrinter.printHelp();
-                }
-                convertedColor = HSLConverter.convertHSL(colorCodeConvertedTo);
+            case "hsl":
+                convertedColor = HSLConverter.convertHSL(colorCodeConvertedTo, input);
                 break;
             default:
                 HelpPrinter.printHelp();

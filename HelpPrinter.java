@@ -1,18 +1,20 @@
 public class HelpPrinter {
     public static void printHelp() {
+        System.out.println("===============================================");
         System.out.println("Dye: A Color Conversion Tool for");
         System.out.print("Hexadecimal, RGB, and HSL color conversions.\n");
-        System.out.println("Usage: Dye [-x|-r|-h] [color_code]");
-        System.out.println(" -x [color_code]");
-        System.out.println(" -r [color_code]");
-        System.out.println(" -h [color_code]");
-        System.out.println("Examples:");
-        System.out.println("Dye -x rgb");
-        System.out.println("Dye -x hsl");
-        System.out.println("Dye -r hex");
-        System.out.println("Dye -r hsl");
-        System.out.println("Dye -h rgb");
-        System.out.println("Dye -h hex");
-        System.exit(0);
+        System.out.println("===============================================");
+        System.out.println("Example Usage:");
+        System.out.println("Convert Hexadecimal to RGB:");
+        System.out.print("Enter a color model (rgb, hex, hsl): hex");
+        System.out.print("Enter a color model to convert to (rgb, hex, hsl): rgb");
+        System.out.println("===============================================");
+        System.out.println("To see this help message again, at any point type:");
+        System.out.println("h");
+        System.out.println("help");
+        System.out.println("===============================================");
+        System.out.println("To quit, at any point type:");
+        System.out.println("q");
+        System.out.println("quit");
     }
 }

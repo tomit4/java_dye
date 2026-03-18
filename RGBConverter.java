@@ -3,23 +3,42 @@ import java.util.Scanner;
 public class RGBConverter {
     private static RGBObj rgbObj;
 
-    public static void setRgbValues() {
-        Scanner input = new Scanner(System.in);
+    public static void setRgbValues(Scanner input) {
+        int rValue, gValue, bValue;
+        while (true) {
+            System.out.print("Enter R value (0 to 255): ");
+            rValue = input.nextInt();
+            if (!isValidColorValue(rValue)) {
+                System.out.println("Error: RGB Values must be between 0 and 255");
+                continue;
+            }
 
-        System.out.print("Enter R value (0 to 255): ");
-        int rValue = input.nextInt();
-        System.out.print("Enter G value (0 to 255): ");
-        int gValue = input.nextInt();
-        System.out.print("Enter B value (0 to 255): ");
-        int bValue = input.nextInt();
+            System.out.print("Enter G value (0 to 255): ");
+            gValue = input.nextInt();
+            if (!isValidColorValue(gValue)) {
+                System.out.println("Error: RGB Values must be between 0 and 255");
+                continue;
+            }
+
+            System.out.print("Enter B value (0 to 255): ");
+            bValue = input.nextInt();
+            if (!isValidColorValue(bValue)) {
+                System.out.println("Error: RGB Values must be between 0 and 255");
+                continue;
+            }
+
+            break;
+        }
 
         rgbObj = new RGBObj(rValue, gValue, bValue);
-
-        input.close();
     }
 
-    public static String convertRGB(String colorCodeConvertedTo) {
-        setRgbValues();
+    private static boolean isValidColorValue(int value) {
+        return value >= 0 && value <= 255;
+    }
+
+    public static String convertRGB(String colorCodeConvertedTo, Scanner input) {
+        setRgbValues(input);
 
         String convertedColor = "";
 
@@ -94,17 +113,9 @@ class RGBObj {
     private int bValue;
 
     public RGBObj(int rVal, int gVal, int bVal) {
-        if (!isValidColorValue(rVal) || !isValidColorValue(gVal) || !isValidColorValue(bVal)) {
-            System.out.println("Error: RGB Values must be between 0 and 255");
-            System.exit(1);
-        }
         this.rValue = rVal;
         this.gValue = gVal;
         this.bValue = bVal;
-    }
-
-    private boolean isValidColorValue(int value) {
-        return value >= 0 && value <= 255;
     }
 
     public int getRValue() {

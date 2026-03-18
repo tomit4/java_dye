@@ -5,32 +5,60 @@ import java.util.regex.Pattern;
 public class HEXConverter {
     private static HEXObj hexObj;
 
-    public static void setHexValues() {
-        Scanner input = new Scanner(System.in);
+    public static void setHexValues(Scanner input) {
+        String rVal, gVal, bVal;
+        while (true) {
+            System.out.print("Enter A Hexadecimal Color Code: ");
+            String hex = input.nextLine();
 
-        System.out.print("Enter A Hexadecimal Color Code: ");
-        String hex = input.nextLine();
+            if (hex.startsWith("#")) {
+                hex = hex.substring(1);
+            }
 
-        if (hex.startsWith("#")) {
-            hex = hex.substring(1);
+            if (hex.length() != 6) {
+                System.out.println("Invalid HEX color code. Must be 6 characters long.");
+                setHexValues(input);
+            }
+
+            rVal = hex.substring(0, 2);
+
+            if (!isValidHEXValue(rVal)) {
+                System.out.println("Error: Invalid HEX color values for R value: " + rVal);
+                System.out.println("Must be hexadecimal digits (0-9, A-F).");
+                continue;
+            }
+
+            gVal = hex.substring(2, 4);
+
+            if (!isValidHEXValue(gVal)) {
+                System.out.println("Error: Invalid HEX color values for G value: " + gVal);
+                System.out.println("Must be hexadecimal digits (0-9, A-F).");
+                continue;
+            }
+
+            bVal = hex.substring(4, 6);
+
+            if (!isValidHEXValue(bVal)) {
+                System.out.println("Error: Invalid HEX color values for B value: " + bVal);
+                System.out.println("Must be hexadecimal digits (0-9, A-F).");
+                continue;
+            }
+
+            break;
         }
-
-        if (hex.length() != 6) {
-            System.out.println("Invalid HEX color code. Must be 6 characters long.");
-            System.exit(1);
-        }
-
-        String rVal = hex.substring(0, 2);
-        String gVal = hex.substring(2, 4);
-        String bVal = hex.substring(4, 6);
 
         hexObj = new HEXObj(rVal, gVal, bVal);
-
-        input.close();
     }
 
-    public static String convertHex(String colorCodeConvertedTo) {
-        setHexValues();
+    private static boolean isValidHEXValue(String hexValue) {
+        String hexRegEx = "^[0-9A-Fa-f]{2}$";
+        Pattern pattern = Pattern.compile(hexRegEx);
+        Matcher matcher = pattern.matcher(hexValue);
+        return matcher.matches();
+    }
+
+    public static String convertHex(String colorCodeConvertedTo, Scanner input) {
+        setHexValues(input);
 
         String convertedColor = "";
 
@@ -110,22 +138,9 @@ class HEXObj {
     private String bByte;
 
     public HEXObj(String rVal, String gVal, String bVal) {
-        if (!isValidHEXValue(rVal) || !isValidHEXValue(gVal) || !isValidHEXValue(bVal)) {
-            System.out.println("Error: Invalid HEX color values.");
-            System.out.println("Must be hexadecimal digits (0-9, A-F).");
-            System.exit(1);
-        }
-
         this.rByte = rVal;
         this.gByte = gVal;
         this.bByte = bVal;
-    }
-
-    private static boolean isValidHEXValue(String hexValue) {
-        String hexRegEx = "^[0-9A-Fa-f]{2}$";
-        Pattern pattern = Pattern.compile(hexRegEx);
-        Matcher matcher = pattern.matcher(hexValue);
-        return matcher.matches();
     }
 
     public String getRByte() {

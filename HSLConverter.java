@@ -3,23 +3,39 @@ import java.util.Scanner;
 public class HSLConverter {
     private static HSLObj hslObj;
 
-    public static void setHslValues() {
-        Scanner input = new Scanner(System.in);
+    public static void setHslValues(Scanner input) {
+        int hValue, sValue, lValue;
 
-        System.out.print("Enter H value (0 to 360): ");
-        int hValue = input.nextInt();
-        System.out.print("Enter S value (0 to 100): ");
-        int sValue = input.nextInt();
-        System.out.print("Enter L value (0 to 100): ");
-        int lValue = input.nextInt();
+        while (true) {
+            System.out.print("Enter H value (0 to 360): ");
+            hValue = input.nextInt();
+            if (hValue < 0 || hValue > 360) {
+                System.out.println("Error: Hue must be 0 - 360");
+                continue;
+            }
+
+            System.out.print("Enter S value (0 to 100): ");
+            sValue = input.nextInt();
+            if (sValue < 0 || sValue > 100) {
+                System.out.println("Saturation must be 0 - 100");
+                continue;
+            }
+
+            System.out.print("Enter L value (0 to 100): ");
+            lValue = input.nextInt();
+            if (lValue < 0 || lValue > 100) {
+                System.out.println("Lightness must be 0 - 100");
+                continue;
+            }
+
+            break;
+        }
 
         hslObj = new HSLObj(hValue, sValue, lValue);
-
-        input.close();
     }
 
-    public static String convertHSL(String colorCodeConvertedTo) {
-        setHslValues();
+    public static String convertHSL(String colorCodeConvertedTo, Scanner input) {
+        setHslValues(input);
 
         String convertedColor = "";
 
@@ -108,29 +124,9 @@ class HSLObj {
     private int lValue;
 
     public HSLObj(int hVal, int sVal, int lVal) {
-        if (!isValidHSLValue(hVal, sVal, lVal)) {
-            System.out.println("Error: Hue must be 0 - 360");
-            System.out.println("Saturation must be 0 - 100");
-            System.out.println("Lightness must be 0 - 100");
-            System.exit(1);
-        }
-
         this.hValue = hVal;
         this.sValue = sVal;
         this.lValue = lVal;
-    }
-
-    private static boolean isValidHSLValue(int hVal, int sVal, int lVal) {
-        if (hVal < 0 || hVal > 360) {
-            return false;
-        }
-        if (sVal < 0 || sVal > 100) {
-            return false;
-        }
-        if (lVal < 0 || lVal > 100) {
-            return false;
-        }
-        return true;
     }
 
     public int getHValue() {
