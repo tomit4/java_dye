@@ -17,8 +17,6 @@ public class HEXConverter {
                     hex = hex.substring(1);
                 }
 
-                System.out.println("hex :=> " + hex);
-
                 if (hex.length() != 6) {
                     System.out.println("Invalid HEX color code. Must be 6 characters long.");
                     continue;
