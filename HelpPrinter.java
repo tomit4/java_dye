@@ -17,14 +17,14 @@ public class HelpPrinter {
         // Decorative header
         System.out.println("===============================================");
         System.out.println("Dye: A Color Conversion Tool for");
-        System.out.print("Hexadecimal, RGB, and HSL color conversions.\n");
+        System.out.println("Hexadecimal, RGB, and HSL color conversions.\n");
         System.out.println("===============================================");
 
         // Example usage section
         System.out.println("Example Usage:");
         System.out.println("Convert Hexadecimal to RGB:");
-        System.out.print("Enter a color model (rgb, hex, hsl): hex");
-        System.out.print("Enter a color model to convert to (rgb, hex, hsl): rgb");
+        System.out.println("Enter a color model (rgb, hex, hsl): hex");
+        System.out.println("Enter a color model to convert to (rgb, hex, hsl): rgb");
         System.out.println("===============================================");
 
         // How to view help again

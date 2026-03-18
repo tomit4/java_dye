@@ -10,5 +10,5 @@ Programming's final touchstone project.
 - [x] Apply try/catch statements for exceptions
 - [x] Identify and resolve potential edge cases
 - [x] Comment the code
-- [ ] Fill out docs
+- [x] Fill out docs
 - [ ] Submit
