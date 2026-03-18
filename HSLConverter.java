@@ -1,14 +1,33 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
+/*
+ * HSLConverter.java
+ *
+ * Handles the conversions between HSL, RGB, and HEX color models.
+ * Guides the user to input valid HSL values, validates them,
+ * and performs the necessary conversions.
+ */
+
 public class HSLConverter {
+    // Stores the user's HSL input values as an object
     private static HSLObj hslObj;
 
+    /*
+     * Prompts the user to enter HSL values for Hue, Saturation, and Lightness.
+     * Ensures that input is valid (integers only) and within proper ranges:
+     * Hue: 0-360
+     * Saturation: 0-100
+     * Lightness: 0-100
+     *
+     * @param input Scanner object for reading input from the console
+     */
     public static void setHslValues(Scanner input) {
         int hValue, sValue, lValue;
 
         while (true) {
             try {
+                // Prompt for Hue component
                 System.out.print("Enter H value (0 to 360): ");
                 hValue = input.nextInt();
                 if (hValue < 0 || hValue > 360) {
@@ -16,6 +35,7 @@ public class HSLConverter {
                     continue;
                 }
 
+                // Prompt for Saturation component
                 System.out.print("Enter S value (0 to 100): ");
                 sValue = input.nextInt();
                 if (sValue < 0 || sValue > 100) {
@@ -23,6 +43,7 @@ public class HSLConverter {
                     continue;
                 }
 
+                // Prompt for Lightness component
                 System.out.print("Enter L value (0 to 100): ");
                 lValue = input.nextInt();
                 if (lValue < 0 || lValue > 100) {
@@ -30,47 +51,76 @@ public class HSLConverter {
                     continue;
                 }
 
+                // Consume leftover newline
                 input.nextLine();
-                break;
+                break; // All values are valid, exit loop
             } catch (InputMismatchException e) {
+                // Handle non-integer input gracefully
                 System.out.println("Invalid input! Please enter an integer value");
                 input.nextLine();
             }
         }
 
+        // Store validated values in the HSLObj object
         hslObj = new HSLObj(hValue, sValue, lValue);
     }
 
+    /*
+     * Converts the stored HSL values to the requested target model (RGB or HEX).
+     *
+     * @param colorCodeConvertedTo Target color model ("rgb" or "hex")
+     *
+     * @param input Scanner object for user input
+     *
+     * @return Converted color as a string
+     */
     public static String convertHSL(String colorCodeConvertedTo, Scanner input) {
+        // Prompts the user to enter HSL values
         setHslValues(input);
 
         String convertedColor = "";
 
+        // Decide which conversion method to use
         if (colorCodeConvertedTo.equals("hex")) {
             convertedColor = convertToHex();
-        } else {
+        } else { // must be "rgb"
             convertedColor = convertToRgb();
         }
 
         return convertedColor;
     }
 
+    /*
+     * Converts stored HSL values to HEX.
+     * HSL is first converted to RGB, then RGB is converted to HEX.
+     *
+     * @return HEX color string in format "#RRGGBB"
+     */
     public static String convertToHex() {
-        // NOTE: HSL to HEX requires first converting HSL to RGB, then RGB to HEX
+        // Convert HSL to RGB first
         String rgb = convertToRgb();
 
+        // Extract individual RGB components from the string
         int r = Integer.parseInt(rgb.split(",")[0].split("\\(")[1].trim());
         int g = Integer.parseInt(rgb.split(",")[1].trim());
         int b = Integer.parseInt(rgb.split(",")[2].split("\\)")[0].trim());
 
+        // Format as HEX string
         return String.format("#%02X%02X%02X", r, g, b);
     }
 
+    /*
+     * Converts the stored HSL values to RGB
+     * (Hue, Saturation, Lightness -> Red, Green, Blue)
+     *
+     * @return RGB color string in format "RGB(R, G, B)"
+     */
     public static String convertToRgb() {
         /*
          * Uses Mathematical formulas from
          * https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB
          * Notes reflects Latex from that article
+         * See Conversions.md for Latex formulas
          */
 
         int h = hslObj.getHValue();
@@ -87,7 +137,7 @@ public class HSLConverter {
 
         float R1 = 0, G1 = 0, B1 = 0;
 
-        // Massive Piecewise Function for HSL to RGB Formula
+        // Piecewise Function for HSL -> RGB conversion
         if (HPrime >= 0 & HPrime < 1) {
             R1 = C;
             G1 = X;
@@ -125,6 +175,9 @@ public class HSLConverter {
     }
 }
 
+/*
+ * Simple class to store HSL values together
+ */
 class HSLObj {
     private int hValue;
     private int sValue;

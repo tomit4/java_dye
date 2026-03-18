@@ -2,9 +2,24 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/*
+ * HEXConverter.java
+ *
+ * Handles conversions between HEX, RGB, and HSL color models.
+ * Guides the user to input valid HEX color codes, validates them,
+ * and performs the necessary conversions.
+ */
+
 public class HEXConverter {
+    // Stores the user's HEX input values as an object
     private static HEXObj hexObj;
 
+    /*
+     * Prompts the user to enter a HEX color code.
+     * Validates that the code is 6 hexadecimal digits (0-9, A-F).
+     *
+     * @param input Scanner object for reading input from the console
+     */
     public static void setHexValues(Scanner input) {
         String rVal, gVal, bVal;
 
@@ -13,17 +28,19 @@ public class HEXConverter {
                 System.out.print("Enter A Hexadecimal Color Code: ");
                 String hex = input.nextLine();
 
+                // Remove leading '#' if present
                 if (hex.startsWith("#")) {
                     hex = hex.substring(1);
                 }
 
+                // Ensure the HEX code is exactly 6 characters long
                 if (hex.length() != 6) {
                     System.out.println("Invalid HEX color code. Must be 6 characters long.");
                     continue;
                 }
 
+                // Extract and validate each component
                 rVal = hex.substring(0, 2);
-
                 if (!isValidHEXValue(rVal)) {
                     System.out.println("Error: Invalid HEX color values for R value: " + rVal);
                     System.out.println("Must be hexadecimal digits (0-9, A-F).");
@@ -31,7 +48,6 @@ public class HEXConverter {
                 }
 
                 gVal = hex.substring(2, 4);
-
                 if (!isValidHEXValue(gVal)) {
                     System.out.println("Error: Invalid HEX color values for G value: " + gVal);
                     System.out.println("Must be hexadecimal digits (0-9, A-F).");
@@ -39,23 +55,31 @@ public class HEXConverter {
                 }
 
                 bVal = hex.substring(4, 6);
-
                 if (!isValidHEXValue(bVal)) {
                     System.out.println("Error: Invalid HEX color values for B value: " + bVal);
                     System.out.println("Must be hexadecimal digits (0-9, A-F).");
                     continue;
                 }
 
-                break;
+                break; // All values valid, exit loop
             } catch (Exception e) {
+                // Catch any unexpected exceptions (e.g., null input)
                 System.out.println("Error: HEX values must be 0-9 or A-F.");
                 continue;
             }
         }
 
+        // Store validated values in the HEXObj object
         hexObj = new HEXObj(rVal, gVal, bVal);
     }
 
+    /*
+     * Validates a two-character HEX value (00-FF)
+     *
+     * @param hexValue String to validate
+     *
+     * @return true if valid, false otherwise
+     */
     private static boolean isValidHEXValue(String hexValue) {
         String hexRegEx = "^[0-9A-Fa-f]{2}$";
         Pattern pattern = Pattern.compile(hexRegEx);
@@ -63,20 +87,35 @@ public class HEXConverter {
         return matcher.matches();
     }
 
+    /*
+     * Converts the stored HEX values to the requested target model (RGB or HSL).
+     *
+     * @param colorCodeConvertedTo Target color model ("rgb" or "hsl")
+     *
+     * @param input Scanner object for user input (needed for future extensions)
+     *
+     * @return Converted color as a string
+     */
     public static String convertHex(String colorCodeConvertedTo, Scanner input) {
+        // Prompts the user to enter HEX values
         setHexValues(input);
 
         String convertedColor = "";
 
         if (colorCodeConvertedTo.equals("rgb")) {
             convertedColor = convertToRgb();
-        } else {
+        } else { // must be "hsl"
             convertedColor = convertToHsl();
         }
 
         return convertedColor;
     }
 
+    /*
+     * Converts the stored HEX values to RGB.
+     *
+     * @return RGB color string in format "RGB(R, G, B)"
+     */
     public static String convertToRgb() {
         String rHex = hexObj.getRByte();
         String gHex = hexObj.getGByte();
@@ -89,11 +128,17 @@ public class HEXConverter {
         return String.format("RGB(%d, %d, %d)", r, g, b);
     }
 
+    /*
+     * Converts the stored HEX values to HSL.
+     *
+     * @return HSL color string in format "HSL(H°, S%, L%)"
+     */
     public static String convertToHsl() {
         /*
          * Uses Mathematical formulas from
          * https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
          * Notes reflects Latex from that article
+         * See Conversions.md for Latex formulas
          */
         String rgb = convertToRgb();
         String[] rgbComponents = rgb.split("[(),]");
@@ -102,7 +147,7 @@ public class HEXConverter {
         float g = Integer.parseInt(rgbComponents[2].trim()) / 255f;
         float b = Integer.parseInt(rgbComponents[3].trim()) / 255f;
 
-        // With maximum compoonent (i.e. value)
+        // With maximum component (i.e. value)
         float Cmax = Math.max(r, Math.max(g, b));
         // And minimum component
         float Cmin = Math.min(r, Math.min(g, b));
@@ -138,6 +183,9 @@ public class HEXConverter {
     }
 }
 
+/*
+ * Simple class to store HEX values for R, G, and B components
+ */
 class HEXObj {
     private String rByte;
     private String gByte;
